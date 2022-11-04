@@ -167,7 +167,7 @@
         );
         const token = new ethers.Contract(tokenAddress, erc20Abi, provider);
         const addresses = addressString.split(/\r?\n/);
-        if (addresses.at(-1).length === 0) addresses.pop();
+        if (addresses[addresses.length - 1].length === 0) addresses.pop();
         const result = await balanceChecker.balances(addresses, [tokenAddress]);
         const decimals = await token.decimals();
         return result.map((balanceBig, index) => ({

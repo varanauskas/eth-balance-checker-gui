@@ -8,61 +8,70 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <form id="form">
-      <h1>eth-balance-checker gui</h1>
-      <label>
-        JSON-RPC URL
-        <input
-          name="rpc"
-          type="url"
-          required
-          value="https://bsc-dataseed1.binance.org/"
-          placeholder="https://"
-        />
-      </label>
-      <label>
-        eth-balance-checker Contract Address
-        <input
-          name="contract"
-          type="text"
-          minlength="42"
-          maxlength="42"
-          pattern="^0x[a-fA-F0-9]{40}$"
-          title="Ethereum address"
-          required
-          value="0x2352c63A83f9Fd126af8676146721Fa00924d7e4"
-          placeholder="0x"
-        />
-      </label>
-      <label>
-        Token Address
-        <input
-          name="token"
-          type="text"
-          minlength="42"
-          maxlength="42"
-          pattern="^0x[a-fA-F0-9]{40}$"
-          title="Ethereum address"
-          required
-          placeholder="0x"
-        />
-      </label>
-      <label>
-        Addresses (one per line, 1000 max)
-        <textarea
-          name="addresses"
-          cols="42"
-          rows="10"
-          placeholder="0x"
-          required
-        ></textarea>
-      </label>
-      <button id="submit" type="submit">Get balances</button>
-    </form>
-    <label>
-      Balances
-      <textarea id="balances" cols="42" rows="10" readonly></textarea>
-    </label>
+    <main>
+
+      <form id="form">
+        <h1>eth-balance-checker gui</h1>
+        <label>
+          JSON-RPC URL
+          <input
+            name="rpc"
+            type="url"
+            required
+            value="https://bsc-dataseed1.binance.org/"
+            placeholder="https://"
+          />
+        </label>
+        <label>
+          eth-balance-checker Contract Address
+          <input
+            name="contract"
+            type="text"
+            minlength="42"
+            maxlength="42"
+            pattern="^0x[a-fA-F0-9]{40}$"
+            title="Ethereum address"
+            required
+            value="0x2352c63A83f9Fd126af8676146721Fa00924d7e4"
+            placeholder="0x"
+          />
+        </label>
+        <label>
+          Token Address
+          <input
+            name="token"
+            type="text"
+            minlength="42"
+            maxlength="42"
+            pattern="^0x[a-fA-F0-9]{40}$"
+            title="Ethereum address"
+            required
+            placeholder="0x"
+          />
+        </label>
+        <label>
+          Addresses (one per line, 1000 max)
+          <textarea
+            name="addresses"
+            cols="42"
+            rows="10"
+            placeholder="0x"
+            required
+          ></textarea>
+        </label>
+        <button id="submit" type="submit">Get balances</button>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Address</th>
+            <td>Balance</td>
+          </tr>
+        </thead>
+        <tbody id="balances"></tbody>
+      </table>
+      <a id="export" download="export.csv" href="data:,">Download CSV</a>
+    </main>
     <script
       src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
       type="application/javascript"

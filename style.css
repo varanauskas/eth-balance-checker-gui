@@ -1,13 +1,25 @@
 body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+main {
   width: 80ch;
   margin: 0 auto;
-  font-family: sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-weight: lighter;
+  margin-top: 3em;
+  margin-bottom: 2em;
 }
 
 input,
 textarea {
   font-family: monospace;
   width: 100%;
+  box-sizing: border-box;
 }
 
 textarea:read-only {
@@ -26,4 +38,32 @@ label {
 
 form {
   margin-bottom: 2em;
+}
+
+table {
+  width: 100%;
+  border-radius: 0.2em;
+  border-collapse: collapse;
+}
+
+thead, label {
+  color: gray;
+  font-size: 0.8em;
+}
+
+thead tr, thead td {
+  border-bottom: 1px solid gray;
+  padding-bottom: 0.5em;
+}
+
+tbody tr, tbody td {
+  padding-top: 0.5em;
+}
+
+th {
+  font-weight: normal;
+  text-align: left;
+}
+td {
+  text-align: right;
 }

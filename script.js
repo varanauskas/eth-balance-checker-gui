@@ -1,6 +1,7 @@
 // Elements
 const form = document.getElementById("form");
 const balances = document.getElementById("balances");
+const exportLink = document.getElementById("export");
 
 // Populate form values from URLSearchParams
 new URLSearchParams(window.location.search).forEach((value, name) => {
@@ -9,21 +10,16 @@ new URLSearchParams(window.location.search).forEach((value, name) => {
 });
 
 // Form manipulation
-function disableForm() {
+function setDisabled(disabled) {
   for (const element of form.elements) {
-    element.disabled = true;
+    element.disabled = disabled;
   }
-}
-function enableForm() {
-  for (const element of form.elements) {
-    element.disabled = false;
-  }
+  exportLink.disabled = disabled;
 }
 
 // Number manipulation
 function formatFixed(big, decimals) {
   const text = big.toString().padStart(decimals + 1, "0");
-  console.log(text);
   const index = text.length - decimals;
   const int = text.substring(0, index);
   const rem = text.substring(index);
@@ -80,16 +76,30 @@ async function getBalances({
     balance: formatFixed(balanceBig, decimals),
   }));
 }
+
+function clearResults() {
+  balances.innerHTML = "";
+  balances.href = "data:,";
+}
+
+function updateResults(results) {
+  for (const { address, balance } of results) {
+    const row = balances.insertRow();
+    const addressCell = document.createElement("th");
+    addressCell.innerText = address;
+    row.appendChild(addressCell);
+    row.insertCell().innerText = balance;
+  }
+  const content = results.map(result => Object.values(result).join(',')).join('\n');
+  exportLink.href = URL.createObjectURL(new Blob(["Address,Balance\n", content], { type: "text/plain" }));
+}
+
 function submitForm(formData) {
-  disableForm();
+  setDisabled(true);
   getBalances(Object.fromEntries(formData))
-    .then((result) => {
-      balances.value = result
-        .map(({ address, balance }) => `${address}\t${balance}`)
-        .join("\n");
-    })
-    .catch((error) => (balances.value = error))
-    .finally(enableForm);
+    .then(updateResults)
+    .catch(console.error)
+    .finally(() => setDisabled(false));
 }
 if (form.reportValidity()) submitForm(new FormData(form));
 form.addEventListener("submit", (event) => {

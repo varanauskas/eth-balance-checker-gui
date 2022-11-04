@@ -1,0 +1,29 @@
+body {
+  width: 80ch;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+input,
+textarea {
+  font-family: monospace;
+  width: 100%;
+}
+
+textarea:read-only {
+  background-color: #eee;
+}
+
+label,
+input,
+textarea {
+  display: block;
+}
+
+label {
+  margin-bottom: 1em;
+}
+
+form {
+  margin-bottom: 2em;
+}
